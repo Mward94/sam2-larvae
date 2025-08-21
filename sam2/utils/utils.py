@@ -1,18 +1,20 @@
-import cv2
-import matplotlib.pyplot as plt
-import ffmpeg
-import os
-import torch
-import numpy as np
-from tqdm import tqdm
-from shapely.geometry import Polygon
-from scipy.spatial import distance
-import pandas as pd
-from scipy import stats
 import copy
+import os
 from collections import defaultdict
+
+# Set environment variable to disable ultralytics verbose logging
+os.environ['YOLO_VERBOSE'] = "False"
+
+import cv2
+import ffmpeg
+import numpy as np
+import pandas as pd
+import torch
+from scipy.spatial import distance
+from shapely.geometry import Polygon
+from tqdm import tqdm
+from ultralytics.engine.results import Masks
 from ultralytics.utils.plotting import Annotator, colors
-from ultralytics.engine.results import Masks, Boxes
 
 
 def get_video_info(video_path):
