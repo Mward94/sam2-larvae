@@ -657,7 +657,7 @@ def draw_on_video(video_path, out_dir, out_video_name, video_segments, fps, h, w
     # Get total frames
     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-    for frame_index in tqdm(range(frame_count)):
+    for frame_index in tqdm(range(frame_count), desc='Generating video'):
         # Read frame (automatically advances, so no need for `cap.set`)
         ret, frame = cap.read()
 
