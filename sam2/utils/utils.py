@@ -534,14 +534,20 @@ def get_aggregated_data(good_data, bad_data, fps=30, scale_factor=0.05):
         temp_data['distance during elongated state (mm)'] = np.sum(distances * is_elongated)
         temp_data['distance (mm)'] = np.sum(distances)
 
+        # Extract number of good/bad frames
+        good_frames = extract_column_for_obj(good_data, obj_id, 'frame')
+        bad_frames = extract_column_for_obj(bad_data, obj_id, 'frame')
+
+        # Add in distance normalised by number of 'good' frames
+        temp_data['mean distance per-frame (mm)'] = temp_data['distance (mm)'] / len(good_frames)
+
         # calculate duration in elongated state
         temp_data['duration in elongated state (seconds)'] = np.sum(is_elongated) / fps
 
         # calculate duration in bent state
         temp_data['duration in bent state (seconds)'] = np.sum(1 - is_elongated) / fps
 
-        good_frames = extract_column_for_obj(good_data, obj_id, 'frame')
-        bad_frames = extract_column_for_obj(bad_data, obj_id, 'frame')
+        # Frame inclusion/exclusion
         temp_data['number of good frames'] = len(good_frames)
         temp_data['number of problematic frames'] = len(bad_frames)
         temp_data['first problematic frame'] = None if len(bad_frames) == 0 else bad_frames[0]
